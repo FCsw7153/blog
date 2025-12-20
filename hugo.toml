@@ -3,7 +3,7 @@
 # --- 核心配置 ---
 # 1. 这里必须填你要部署的完整 URL，注意最后带上斜杠
 # 如果你的 GitHub ID 是 "zhangsan"，仓库名叫 "blog"
-baseURL = "https://fcsw7153.github.io//blog/" 
+baseURL = "https://FCsw7153.github.io//blog/" 
 
 languageCode = "zh-cn"
 title = "Blog" # 博客标题
