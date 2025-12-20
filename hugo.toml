@@ -1,0 +1,30 @@
+# hugo.toml
+
+# --- 核心配置 ---
+# 1. 这里必须填你要部署的完整 URL，注意最后带上斜杠
+# 如果你的 GitHub ID 是 "zhangsan"，仓库名叫 "blog"
+baseURL = "https://fcsw7153.github.io//blog/" 
+
+languageCode = "zh-cn"
+title = "Blog" # 博客标题
+theme = "PaperMod"
+
+# --- 启用 LaTeX 数学公式 (AI 科研党必备) ---
+[params]
+    math = true 
+
+# --- 菜单配置 (可选) ---
+[[menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 10
+[[menu.main]]
+    identifier = "search"
+    name = "搜索"
+    url = "/search/"
+    weight = 20
+
+# --- 设置生成静态文件的路径 ---
+# 这一步是为了配合 GitHub Pages
+publishDir = "docs"
