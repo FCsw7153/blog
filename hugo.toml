@@ -27,4 +27,4 @@ theme = "PaperMod"
 
 # --- 设置生成静态文件的路径 ---
 # 这一步是为了配合 GitHub Pages
-publishDir = "docs"
+# publishDir = "docs"
