@@ -12,6 +12,7 @@ theme = "PaperMod"
 # --- 启用 LaTeX 数学公式 (AI 科研党必备) ---
 [params]
     math = true 
+    author = "fcsw"
 
 # --- 菜单配置 (可选) ---
 [[menu.main]]
