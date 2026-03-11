@@ -1,6 +1,9 @@
----
-
----
++++
+date = '2026-02-20T22:19:42+08:00'
+draft = false
+title = 'CS336 Assignment 1'
+math = true
++++
 >[!info] 题述
 >一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。
 
