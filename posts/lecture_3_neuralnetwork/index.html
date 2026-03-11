@@ -1,0 +1,128 @@
+<!doctype html><html lang=en dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>CS224N Lecture3 | Blog</title><meta name=keywords content><meta name=description content="神经网络的基础
+由于大多数的数据都是非线性的，所有分类问题有非线性的需求。利用神经网络来生成一个非线性的分类器可以比较好的实现分类功能。那么如何训练一个神经网络呢？神经网络的原理是什么？
+神经元
+一个神经元就是一个单独的计算单元，将n个输出经过计算处理之后生成一个单独的输出。通过不同的参数来区分是哪一个神经元的输出，这个参数也叫做这个神经元的权重。
+对于一个神经元来说，一个经常选择的函数就是sigmoid函数。这个神经元将一个 $n$维的输入向量转换成为一个标量。公式如下：
+$$
+a=\frac{1}{1+exp(-(w^Tx+b))}
+$$
+在上述公式中， $x$为输入的 $n$维向量， $b$为偏置值， $w^T$为权重（也是这个神经元的参数）
+![[IMG-20260116173227690.png]]
+单层神经元
+发散思维到利用多个神经元来解决问题，也就是将输入向量喂给多个神经元，如下图所示。
+![[IMG-20260116173227703.png]]
+所以不同神经元的参数为 ${w^{(1)}, w^{(2)}, …, w^{(m)}}$，偏置为${b_{1}, b_{2}, …, b_{m}}$，对应的输出为 ${a_1, a_2, &mldr;, a_m}$
+$$
+a_i=\frac{1}{1+exp(-(w^{(i)T}x+b_i))}
+$$
+前传播网络的计算
+![[IMG-20260116173227716.png]]
+$$
+s=U^Ta=U^Tf(Wx+b)
+$$
+反向传播
+反向传播充分利用了函数微分学里面的链式法则，由于每一个参与影响函数变化的参数都可以通过链式法则来求出这个参数的梯度，那么就可以利用链式法则来简化每一个参数梯度的计算。
+如何理解反向传播可以简化参数梯度的计算呢？
+以一个简单的例子来说明：
+有一个简单的函数：
+$$
+f(x,y,z)=(x+y)z
+$$
+不妨设 $q=(x+y)$
+![[IMG-20260116173227731.png]]
+对于这个函数来说，假设三个参数的初始值为 $x=-2,y=5,z=-4$
+如果不利用反向传播也就是链式法则的原理，三个参数的梯度计算如下：
+$$
+\frac{\partial f}{\partial x}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial x}\ \frac{\partial f}{\partial y}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial y}\ \frac{\partial f}{\partial z}=\frac{\partial f}{\partial q}
+$$"><meta name=author content="fcsw"><link rel=canonical href=https://fcsw7153.github.io/blog/posts/lecture_3_neuralnetwork/><link crossorigin=anonymous href=/blog/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css integrity="sha256-NDzEgLn/yPBMy+XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as=style><link rel=icon href=https://fcsw7153.github.io/blog/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://fcsw7153.github.io/blog/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://fcsw7153.github.io/blog/favicon-32x32.png><link rel=apple-touch-icon href=https://fcsw7153.github.io/blog/apple-touch-icon.png><link rel=mask-icon href=https://fcsw7153.github.io/blog/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://fcsw7153.github.io/blog/posts/lecture_3_neuralnetwork/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}@media(prefers-color-scheme:light){.list::-webkit-scrollbar-thumb{border-color:var(--code-bg)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script><meta property="og:url" content="https://fcsw7153.github.io/blog/posts/lecture_3_neuralnetwork/"><meta property="og:site_name" content="Blog"><meta property="og:title" content="CS224N Lecture3"><meta property="og:description" content="神经网络的基础 由于大多数的数据都是非线性的，所有分类问题有非线性的需求。利用神经网络来生成一个非线性的分类器可以比较好的实现分类功能。那么如何训练一个神经网络呢？神经网络的原理是什么？
+神经元 一个神经元就是一个单独的计算单元，将n个输出经过计算处理之后生成一个单独的输出。通过不同的参数来区分是哪一个神经元的输出，这个参数也叫做这个神经元的权重。
+对于一个神经元来说，一个经常选择的函数就是sigmoid函数。这个神经元将一个 $n$维的输入向量转换成为一个标量。公式如下：
+$$ a=\frac{1}{1+exp(-(w^Tx+b))} $$
+在上述公式中， $x$为输入的 $n$维向量， $b$为偏置值， $w^T$为权重（也是这个神经元的参数）
+![[IMG-20260116173227690.png]]
+单层神经元 发散思维到利用多个神经元来解决问题，也就是将输入向量喂给多个神经元，如下图所示。
+![[IMG-20260116173227703.png]]
+所以不同神经元的参数为 ${w^{(1)}, w^{(2)}, …, w^{(m)}}$，偏置为${b_{1}, b_{2}, …, b_{m}}$，对应的输出为 ${a_1, a_2, …, a_m}$
+$$ a_i=\frac{1}{1+exp(-(w^{(i)T}x+b_i))} $$
+前传播网络的计算 ![[IMG-20260116173227716.png]]
+$$ s=U^Ta=U^Tf(Wx+b) $$
+反向传播 反向传播充分利用了函数微分学里面的链式法则，由于每一个参与影响函数变化的参数都可以通过链式法则来求出这个参数的梯度，那么就可以利用链式法则来简化每一个参数梯度的计算。
+如何理解反向传播可以简化参数梯度的计算呢？
+以一个简单的例子来说明：
+有一个简单的函数：
+$$ f(x,y,z)=(x+y)z $$
+不妨设 $q=(x+y)$
+![[IMG-20260116173227731.png]]
+对于这个函数来说，假设三个参数的初始值为 $x=-2,y=5,z=-4$
+如果不利用反向传播也就是链式法则的原理，三个参数的梯度计算如下：
+$$ \frac{\partial f}{\partial x}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial x}\ \frac{\partial f}{\partial y}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial y}\ \frac{\partial f}{\partial z}=\frac{\partial f}{\partial q} $$"><meta property="og:locale" content="zh-cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-12-20T22:19:42+08:00"><meta property="article:modified_time" content="2025-12-20T22:19:42+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="CS224N Lecture3"><meta name=twitter:description content="神经网络的基础
+由于大多数的数据都是非线性的，所有分类问题有非线性的需求。利用神经网络来生成一个非线性的分类器可以比较好的实现分类功能。那么如何训练一个神经网络呢？神经网络的原理是什么？
+神经元
+一个神经元就是一个单独的计算单元，将n个输出经过计算处理之后生成一个单独的输出。通过不同的参数来区分是哪一个神经元的输出，这个参数也叫做这个神经元的权重。
+对于一个神经元来说，一个经常选择的函数就是sigmoid函数。这个神经元将一个 $n$维的输入向量转换成为一个标量。公式如下：
+$$
+a=\frac{1}{1+exp(-(w^Tx+b))}
+$$
+在上述公式中， $x$为输入的 $n$维向量， $b$为偏置值， $w^T$为权重（也是这个神经元的参数）
+![[IMG-20260116173227690.png]]
+单层神经元
+发散思维到利用多个神经元来解决问题，也就是将输入向量喂给多个神经元，如下图所示。
+![[IMG-20260116173227703.png]]
+所以不同神经元的参数为 ${w^{(1)}, w^{(2)}, …, w^{(m)}}$，偏置为${b_{1}, b_{2}, …, b_{m}}$，对应的输出为 ${a_1, a_2, &mldr;, a_m}$
+$$
+a_i=\frac{1}{1+exp(-(w^{(i)T}x+b_i))}
+$$
+前传播网络的计算
+![[IMG-20260116173227716.png]]
+$$
+s=U^Ta=U^Tf(Wx+b)
+$$
+反向传播
+反向传播充分利用了函数微分学里面的链式法则，由于每一个参与影响函数变化的参数都可以通过链式法则来求出这个参数的梯度，那么就可以利用链式法则来简化每一个参数梯度的计算。
+如何理解反向传播可以简化参数梯度的计算呢？
+以一个简单的例子来说明：
+有一个简单的函数：
+$$
+f(x,y,z)=(x+y)z
+$$
+不妨设 $q=(x+y)$
+![[IMG-20260116173227731.png]]
+对于这个函数来说，假设三个参数的初始值为 $x=-2,y=5,z=-4$
+如果不利用反向传播也就是链式法则的原理，三个参数的梯度计算如下：
+$$
+\frac{\partial f}{\partial x}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial x}\ \frac{\partial f}{\partial y}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial y}\ \frac{\partial f}{\partial z}=\frac{\partial f}{\partial q}
+$$"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://fcsw7153.github.io/blog/posts/"},{"@type":"ListItem","position":2,"name":"CS224N Lecture3","item":"https://fcsw7153.github.io/blog/posts/lecture_3_neuralnetwork/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"CS224N Lecture3","name":"CS224N Lecture3","description":"神经网络的基础 由于大多数的数据都是非线性的，所有分类问题有非线性的需求。利用神经网络来生成一个非线性的分类器可以比较好的实现分类功能。那么如何训练一个神经网络呢？神经网络的原理是什么？\n神经元 一个神经元就是一个单独的计算单元，将n个输出经过计算处理之后生成一个单独的输出。通过不同的参数来区分是哪一个神经元的输出，这个参数也叫做这个神经元的权重。\n对于一个神经元来说，一个经常选择的函数就是sigmoid函数。这个神经元将一个 $n$维的输入向量转换成为一个标量。公式如下：\n$$ a=\\frac{1}{1+exp(-(w^Tx+b))} $$\n在上述公式中， $x$为输入的 $n$维向量， $b$为偏置值， $w^T$为权重（也是这个神经元的参数）\n![[IMG-20260116173227690.png]]\n单层神经元 发散思维到利用多个神经元来解决问题，也就是将输入向量喂给多个神经元，如下图所示。\n![[IMG-20260116173227703.png]]\n所以不同神经元的参数为 ${w^{(1)}, w^{(2)}, …, w^{(m)}}$，偏置为${b_{1}, b_{2}, …, b_{m}}$，对应的输出为 ${a_1, a_2, \u0026hellip;, a_m}$\n$$ a_i=\\frac{1}{1+exp(-(w^{(i)T}x+b_i))} $$\n前传播网络的计算 ![[IMG-20260116173227716.png]]\n$$ s=U^Ta=U^Tf(Wx+b) $$\n反向传播 反向传播充分利用了函数微分学里面的链式法则，由于每一个参与影响函数变化的参数都可以通过链式法则来求出这个参数的梯度，那么就可以利用链式法则来简化每一个参数梯度的计算。\n如何理解反向传播可以简化参数梯度的计算呢？\n以一个简单的例子来说明：\n有一个简单的函数：\n$$ f(x,y,z)=(x+y)z $$\n不妨设 $q=(x+y)$\n![[IMG-20260116173227731.png]]\n对于这个函数来说，假设三个参数的初始值为 $x=-2,y=5,z=-4$\n如果不利用反向传播也就是链式法则的原理，三个参数的梯度计算如下：\n$$ \\frac{\\partial f}{\\partial x}=\\frac{\\partial f}{\\partial q}\\frac{\\partial q}{\\partial x}\\ \\frac{\\partial f}{\\partial y}=\\frac{\\partial f}{\\partial q}\\frac{\\partial q}{\\partial y}\\ \\frac{\\partial f}{\\partial z}=\\frac{\\partial f}{\\partial q} $$\n","keywords":[],"articleBody":"神经网络的基础 由于大多数的数据都是非线性的，所有分类问题有非线性的需求。利用神经网络来生成一个非线性的分类器可以比较好的实现分类功能。那么如何训练一个神经网络呢？神经网络的原理是什么？\n神经元 一个神经元就是一个单独的计算单元，将n个输出经过计算处理之后生成一个单独的输出。通过不同的参数来区分是哪一个神经元的输出，这个参数也叫做这个神经元的权重。\n对于一个神经元来说，一个经常选择的函数就是sigmoid函数。这个神经元将一个 $n$维的输入向量转换成为一个标量。公式如下：\n$$ a=\\frac{1}{1+exp(-(w^Tx+b))} $$\n在上述公式中， $x$为输入的 $n$维向量， $b$为偏置值， $w^T$为权重（也是这个神经元的参数）\n![[IMG-20260116173227690.png]]\n单层神经元 发散思维到利用多个神经元来解决问题，也就是将输入向量喂给多个神经元，如下图所示。\n![[IMG-20260116173227703.png]]\n所以不同神经元的参数为 ${w^{(1)}, w^{(2)}, …, w^{(m)}}$，偏置为${b_{1}, b_{2}, …, b_{m}}$，对应的输出为 ${a_1, a_2, …, a_m}$\n$$ a_i=\\frac{1}{1+exp(-(w^{(i)T}x+b_i))} $$\n前传播网络的计算 ![[IMG-20260116173227716.png]]\n$$ s=U^Ta=U^Tf(Wx+b) $$\n反向传播 反向传播充分利用了函数微分学里面的链式法则，由于每一个参与影响函数变化的参数都可以通过链式法则来求出这个参数的梯度，那么就可以利用链式法则来简化每一个参数梯度的计算。\n如何理解反向传播可以简化参数梯度的计算呢？\n以一个简单的例子来说明：\n有一个简单的函数：\n$$ f(x,y,z)=(x+y)z $$\n不妨设 $q=(x+y)$\n![[IMG-20260116173227731.png]]\n对于这个函数来说，假设三个参数的初始值为 $x=-2,y=5,z=-4$\n如果不利用反向传播也就是链式法则的原理，三个参数的梯度计算如下：\n$$ \\frac{\\partial f}{\\partial x}=\\frac{\\partial f}{\\partial q}\\frac{\\partial q}{\\partial x}\\ \\frac{\\partial f}{\\partial y}=\\frac{\\partial f}{\\partial q}\\frac{\\partial q}{\\partial y}\\ \\frac{\\partial f}{\\partial z}=\\frac{\\partial f}{\\partial q} $$\n如果不利用链式法则所带来的便利性，那么其中 $\\frac{\\partial f}{\\partial q}$这一个需要计算三次，大大增加了计算的负担。\n接下来解释反向传播的原理：\n对于上面这个计算图来说，每一步都有一个微分，但是这个微分不是指整体函数对这个参数的微分，而是这个参数所立即影响的不论是中间变量还是最终变量的微分，也就是如上图所示$\\frac{\\partial q}{\\partial x}\\frac{\\partial q}{\\partial y}$等，是目前这个参数对立即会影响的参数，这两个参数之间的微分。\n那么得到了每个参数的这个微分之后，反向传播也就可以开始了，对于最后一步 $\\frac{\\partial f}{\\partial f}$，很明显为1。然后对于立即影响 $f$的两个参数 $q$和 $z$而言，这两个参数的梯度就是他们之前计算的微分 $\\times$ 所立即影响的那个参数的梯度。\n这样子每一个参数的梯度里面所需要计算的式子都只需要计算一遍，不会重复计算，大大节约了计算力。\n训练神经网络的一些技巧 正则化 对于神经网络而言，很容易出现过拟合的情况，即在训练集上性能出色，但是泛化能力一般，在除训练集以外的地方性能一般。\n一般解决过拟合的问题的常用方法就是在损失函数上添加一个正则项。新的损失函数如下：\n$$ J_R=J+\\lambda\\sum^{L}_{i=1}||W^{(i)}||_F $$\n上述公式是添加了一个L2正则项的结果，其中 $\\lambda$是一个超参数，决定了正则项所影响的作用大小， $\\sum^{L}_{i=1}||W^{(i)}||_F$这个是Frobenius 范数，为矩阵A各项元素的绝对值平方的总和开根。\n$$ \\sum^{L}{i=1}||W^{(i)}||F=\\sqrt{\\sum{i}\\sum{j}U^2_{ij}} $$\n对于正则化来说，超参数 $\\lambda$是非常重要的，需要进行微调来达到一个比较不错的效果。太大或太小都会影响神经网络，太大了，会导致每一个参数都为零，然后神经网络相当于没有学习，太小这个正则项就不起作用没办法解决过拟合的问题。\nDropout Dropout是一个强大的正则化工具，可以有效的解决过拟合的问题。\nDropout是在训练神经网络的过程中，以一个概率抛弃这个神经元，不计算他的前反馈以及梯度，但是在训练完成之后，重新开始使用这个神经元。所以这会导致一个问题，由于训练的过程中没有使用这个神经元，但是训练完成之后又重新启用这个神经元，会导致输出出现很大的变化，一种常见的方法是在训练时，如果某个神经元以概率 p 被保留，那么其输出值要除以 p。这样做的目的是为了保证一个神经元在训练时的预期输出和在测试时的实际输出保持大致相同的尺度，从而避免输出幅度发生剧烈变化。\n![[IMG-20260116173227757.png]]\n动量更新 动量更新其实就是利用momentum在原参数的更新上面进一步优化，对于参数 $\\theta$的更新公式如下：\n$$ m_{t+1}=\\beta m_t+(1-\\beta)\\nabla_{\\theta t}Loss \\ \\theta{t+1}=\\theta_t-\\alpha m_{t+1} $$\n其中 $\\alpha$是larning rate\n自适应优化方法 对于固定的学习率有一个弊端就是容易错过最小值，所以提出一个新的方法，学习率变化的优化方法，对于每一个参数而言，都有一个学习率，某个参数的历史更新次数越少，它的学习率就越高，对于那些不经常更新的参数，我们给予它们更大的步长，让它们更快地收敛。\n$$ \\theta_{t,i}=\\theta_{t-1,i}-\\frac{\\alpha}{\\sqrt{\\sum^{t}{\\tau=1}g^2{t,i}}}g_{t,i} $$\n其中， $\\theta_{t,i}$是第t步，第i个参数的学习率， $\\theta_{t,i}$是第t步，第i个参数的学习率， $g_{t,i}$是第t步，第i个参数的梯度， $\\alpha$是全局学习率， $\\sqrt{\\sum^{t}{\\tau=1}g^2{t,i}}$是从第1步到第t步，第i个参数所有梯度的平方和。\n这个公式的核心思想是：分母部分会随着训练的进行而不断累积梯度平方。如果某个参数的梯度一直很大，那么分母就会变得很大，导致其学习率 $\\frac{\\alpha}{\\sqrt{\\sum^{t}{\\tau=1}g^2{t,i}}}$变小；反之，如果某个参数的梯度一直很小，那么分母就会保持较小，其学习率就会相对较高。\n简易代码实现如下：\n# Assume the gradient dx and parameter vector x cache += dx**2 x += - learning_rate * dx / np.sqrt(cache + 1e-8) 为了解决 AdaGrad 学习率单调递减的问题，RMSProp 应运而生。RMSProp 并不是简单地累积梯度的平方，而是使用梯度的平方的指数移动平均。RMSProp 引入了一个“衰减率”（decay rate），它让最近的梯度对当前学习率的影响更大，而历史久远的梯度影响更小。这样，学习率就不会无限减小，可以更好地适应非平稳的目标。\n# Update rule for RMS prop cache = decay_rate * cache + (1 - decay_rate) * dx**2 x += - learning_rate * dx / (np.sqrt(cache) + eps) ![[IMG-20260116173227765.png]]\nAdam 可以被看作是 RMSProp 的一个变种，它不仅使用了梯度的平方的移动平均（二阶矩），还结合了梯度的移动平均（一阶矩）。\n# Update rule for Adam m = beta1*m + (1-beta1)*dx v = beta2*v + (1-beta2)*(dx**2) x = x - learning_rate * m / (np.sqrt(v) + eps) ","wordCount":"231","inLanguage":"en","datePublished":"2025-12-20T22:19:42+08:00","dateModified":"2025-12-20T22:19:42+08:00","author":{"@type":"Person","name":"fcsw"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://fcsw7153.github.io/blog/posts/lecture_3_neuralnetwork/"},"publisher":{"@type":"Organization","name":"Blog","logo":{"@type":"ImageObject","url":"https://fcsw7153.github.io/blog/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=nav><div class=logo><a href=https://fcsw7153.github.io/blog/ accesskey=h title="Blog (Alt + H)">Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://fcsw7153.github.io/blog/archives/ title=归档><span>归档</span></a></li><li><a href=https://fcsw7153.github.io/blog/search/ title=搜索><span>搜索</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">CS224N Lecture3</h1><div class=post-meta><span title='2025-12-20 22:19:42 +0800 +0800'>December 20, 2025</span>&nbsp;·&nbsp;<span>fcsw</span></div></header><div class=post-content><h1 id=神经网络的基础>神经网络的基础<a hidden class=anchor aria-hidden=true href=#神经网络的基础>#</a></h1><p>由于大多数的数据都是非线性的，所有分类问题有非线性的需求。利用神经网络来生成一个非线性的分类器可以比较好的实现分类功能。那么如何训练一个神经网络呢？神经网络的原理是什么？</p><h2 id=神经元>神经元<a hidden class=anchor aria-hidden=true href=#神经元>#</a></h2><p>一个神经元就是一个单独的计算单元，将n个输出经过计算处理之后生成一个单独的输出。通过不同的参数来区分是哪一个神经元的输出，这个参数也叫做这个神经元的权重。</p><p>对于一个神经元来说，一个经常选择的函数就是sigmoid函数。这个神经元将一个 $n$维的输入向量转换成为一个标量。公式如下：</p><p>$$
+a=\frac{1}{1+exp(-(w^Tx+b))}
+$$</p><p>在上述公式中， $x$为输入的 $n$维向量， $b$为偏置值， $w^T$为权重（也是这个神经元的参数）</p><p>![[IMG-20260116173227690.png]]</p><h2 id=单层神经元>单层神经元<a hidden class=anchor aria-hidden=true href=#单层神经元>#</a></h2><p>发散思维到利用多个神经元来解决问题，也就是将输入向量喂给多个神经元，如下图所示。</p><p>![[IMG-20260116173227703.png]]</p><p>所以不同神经元的参数为 ${w^{(1)}, w^{(2)}, …, w^{(m)}}$，偏置为${b_{1}, b_{2}, …, b_{m}}$，对应的输出为 ${a_1, a_2, &mldr;, a_m}$</p><p>$$
+a_i=\frac{1}{1+exp(-(w^{(i)T}x+b_i))}
+$$</p><h2 id=前传播网络的计算>前传播网络的计算<a hidden class=anchor aria-hidden=true href=#前传播网络的计算>#</a></h2><p>![[IMG-20260116173227716.png]]</p><p>$$
+s=U^Ta=U^Tf(Wx+b)
+$$</p><h2 id=反向传播>反向传播<a hidden class=anchor aria-hidden=true href=#反向传播>#</a></h2><p>反向传播充分利用了函数微分学里面的链式法则，由于每一个参与影响函数变化的参数都可以通过链式法则来求出这个参数的梯度，那么就可以利用链式法则来简化每一个参数梯度的计算。</p><p>如何理解反向传播可以简化参数梯度的计算呢？</p><p>以一个简单的例子来说明：</p><p>有一个简单的函数：</p><p>$$
+f(x,y,z)=(x+y)z
+$$</p><p>不妨设 $q=(x+y)$</p><p>![[IMG-20260116173227731.png]]</p><p>对于这个函数来说，假设三个参数的初始值为 $x=-2,y=5,z=-4$</p><p>如果不利用反向传播也就是链式法则的原理，三个参数的梯度计算如下：</p><p>$$
+\frac{\partial f}{\partial x}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial x}\ \frac{\partial f}{\partial y}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial y}\ \frac{\partial f}{\partial z}=\frac{\partial f}{\partial q}
+$$</p><p>如果不利用链式法则所带来的便利性，那么其中 $\frac{\partial f}{\partial q}$这一个需要计算三次，大大增加了计算的负担。</p><p>接下来解释反向传播的原理：</p><p>对于上面这个计算图来说，每一步都有一个微分，但是这个微分不是指整体函数对这个参数的微分，而是这个参数所立即影响的不论是中间变量还是最终变量的微分，也就是如上图所示$\frac{\partial q}{\partial x}\frac{\partial q}{\partial y}$等，是目前这个参数对立即会影响的参数，这两个参数之间的微分。</p><p>那么得到了每个参数的这个微分之后，反向传播也就可以开始了，对于最后一步 $\frac{\partial f}{\partial f}$，很明显为1。然后对于立即影响 $f$的两个参数 $q$和 $z$而言，这两个参数的梯度就是他们之前计算的微分 $\times$ 所立即影响的那个参数的梯度。</p><p>这样子每一个参数的梯度里面所需要计算的式子都只需要计算一遍，不会重复计算，大大节约了计算力。</p><h1 id=训练神经网络的一些技巧>训练神经网络的一些技巧<a hidden class=anchor aria-hidden=true href=#训练神经网络的一些技巧>#</a></h1><h2 id=正则化>正则化<a hidden class=anchor aria-hidden=true href=#正则化>#</a></h2><p>对于神经网络而言，很容易出现过拟合的情况，即在训练集上性能出色，但是泛化能力一般，在除训练集以外的地方性能一般。</p><p>一般解决过拟合的问题的常用方法就是在损失函数上添加一个正则项。新的损失函数如下：</p><p>$$
+J_R=J+\lambda\sum^{L}_{i=1}||W^{(i)}||_F
+$$</p><p>上述公式是添加了一个L2正则项的结果，其中 $\lambda$是一个超参数，决定了正则项所影响的作用大小， $\sum^{L}_{i=1}||W^{(i)}||_F$这个是Frobenius 范数，为矩阵A各项元素的绝对值平方的总和开根。</p><p>$$
+\sum^{L}<em>{i=1}||W^{(i)}||<em>F=\sqrt{\sum</em>{i}\sum</em>{j}U^2_{ij}}
+$$</p><p>对于正则化来说，超参数 $\lambda$是非常重要的，需要进行微调来达到一个比较不错的效果。太大或太小都会影响神经网络，太大了，会导致每一个参数都为零，然后神经网络相当于没有学习，太小这个正则项就不起作用没办法解决过拟合的问题。</p><h2 id=dropout>Dropout<a hidden class=anchor aria-hidden=true href=#dropout>#</a></h2><p>Dropout是一个强大的正则化工具，可以有效的解决过拟合的问题。</p><p>Dropout是在训练神经网络的过程中，以一个概率抛弃这个神经元，不计算他的前反馈以及梯度，但是在训练完成之后，重新开始使用这个神经元。所以这会导致一个问题，由于训练的过程中没有使用这个神经元，但是训练完成之后又重新启用这个神经元，会导致输出出现很大的变化，一种常见的方法是在训练时，如果某个神经元以概率 p 被保留，那么其输出值要除以 p。这样做的目的是为了保证一个神经元在训练时的预期输出和在测试时的实际输出保持大致相同的尺度，从而避免输出幅度发生剧烈变化。</p><p>![[IMG-20260116173227757.png]]</p><h2 id=动量更新>动量更新<a hidden class=anchor aria-hidden=true href=#动量更新>#</a></h2><p>动量更新其实就是利用momentum在原参数的更新上面进一步优化，对于参数 $\theta$的更新公式如下：</p><p>$$
+m_{t+1}=\beta m_t+(1-\beta)\nabla_{\theta <em>t}Loss \ \theta</em>{t+1}=\theta_t-\alpha m_{t+1}
+$$</p><p>其中 $\alpha$是larning rate</p><h2 id=自适应优化方法>自适应优化方法<a hidden class=anchor aria-hidden=true href=#自适应优化方法>#</a></h2><p>对于固定的学习率有一个弊端就是容易错过最小值，所以提出一个新的方法，学习率变化的优化方法，对于每一个参数而言，都有一个学习率，某个参数的历史更新次数越少，它的学习率就越高，对于那些不经常更新的参数，我们给予它们更大的步长，让它们更快地收敛。</p><p>$$
+\theta_{t,i}=\theta_{t-1,i}-\frac{\alpha}{\sqrt{\sum^{t}<em>{\tau=1}g^2</em>{t,i}}}g_{t,i}
+$$</p><p>其中， $\theta_{t,i}$是第t步，第i个参数的学习率， $\theta_{t,i}$是第t步，第i个参数的学习率， $g_{t,i}$是第t步，第i个参数的梯度， $\alpha$是全局学习率， $\sqrt{\sum^{t}{\tau=1}g^2{t,i}}$是从第1步到第t步，第i个参数所有梯度的平方和。</p><p>这个公式的核心思想是：分母部分会随着训练的进行而不断累积梯度平方。如果某个参数的梯度一直很大，那么分母就会变得很大，导致其学习率 $\frac{\alpha}{\sqrt{\sum^{t}{\tau=1}g^2{t,i}}}$变小；反之，如果某个参数的梯度一直很小，那么分母就会保持较小，其学习率就会相对较高。</p><p>简易代码实现如下：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># Assume the gradient dx and parameter vector x</span>
+</span></span><span style=display:flex><span>cache <span style=color:#f92672>+=</span> dx<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>x <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span> learning_rate <span style=color:#f92672>*</span> dx <span style=color:#f92672>/</span> np<span style=color:#f92672>.</span>sqrt(cache <span style=color:#f92672>+</span> <span style=color:#ae81ff>1e-8</span>)
+</span></span></code></pre></div><p>为了解决 AdaGrad 学习率单调递减的问题，RMSProp 应运而生。RMSProp 并不是简单地累积梯度的平方，而是使用梯度的平方的指数移动平均。RMSProp 引入了一个“衰减率”（decay rate），它让最近的梯度对当前学习率的影响更大，而历史久远的梯度影响更小。这样，学习率就不会无限减小，可以更好地适应非平稳的目标。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># Update rule for RMS prop</span>
+</span></span><span style=display:flex><span>cache <span style=color:#f92672>=</span> decay_rate <span style=color:#f92672>*</span> cache <span style=color:#f92672>+</span> (<span style=color:#ae81ff>1</span> <span style=color:#f92672>-</span> decay_rate) <span style=color:#f92672>*</span> dx<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>x <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span> learning_rate <span style=color:#f92672>*</span> dx <span style=color:#f92672>/</span> (np<span style=color:#f92672>.</span>sqrt(cache) <span style=color:#f92672>+</span> eps)
+</span></span></code></pre></div><p>![[IMG-20260116173227765.png]]</p><p>Adam 可以被看作是 RMSProp 的一个变种，它不仅使用了梯度的平方的移动平均（二阶矩），还结合了梯度的移动平均（一阶矩）。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># Update rule for Adam</span>
+</span></span><span style=display:flex><span>m <span style=color:#f92672>=</span> beta1<span style=color:#f92672>*</span>m <span style=color:#f92672>+</span> (<span style=color:#ae81ff>1</span><span style=color:#f92672>-</span>beta1)<span style=color:#f92672>*</span>dx
+</span></span><span style=display:flex><span>v <span style=color:#f92672>=</span> beta2<span style=color:#f92672>*</span>v <span style=color:#f92672>+</span> (<span style=color:#ae81ff>1</span><span style=color:#f92672>-</span>beta2)<span style=color:#f92672>*</span>(dx<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span>x <span style=color:#f92672>=</span> x <span style=color:#f92672>-</span> learning_rate <span style=color:#f92672>*</span> m <span style=color:#f92672>/</span> (np<span style=color:#f92672>.</span>sqrt(v) <span style=color:#f92672>+</span> eps)
+</span></span></code></pre></div></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://fcsw7153.github.io/blog/>Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script></body></html>
