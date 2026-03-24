@@ -8,7 +8,7 @@
 <title>Posts | Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Posts - Blog">
-<meta name="author" content="">
+<meta name="author" content="fcsw">
 <link rel="canonical" href="http://localhost:1313/posts/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css" integrity="sha256-NDzEgLn/yPBMy&#43;XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
@@ -74,8 +74,17 @@
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
 
 </head>
 <body class="list" id="top">
@@ -129,21 +138,108 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">VAE
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>在生成领域，可以想象，我们需要生成一个图像或者一段文字，需要从一个地方来进行采样的活动，从一个分布中进行采样就可以得到一个新的数据。
+如果可以得到所学习数据的分布，那么将可以很好的进行生成，有了分布就可以进行采样，那么生成模型将可以生成这个分布里面所有的数据。但是得到所学习数据的分布是十分困难的，所以如何更好的去拟合这个分布成为了生成模型的重点。
+什么是VAE 假设输入的学习的数据是$x$，所输出的生成的数据是$\hat{x}$。所学习到的分布是$z$。那么$\hat{x}$就是从分布$z$中采样得到的数据。
+我们假设$p(Z|X_k)$是一个专属于$X_k$的分布，并且进一步假设这个分布是正态分布。
+[!info] 为什么需要假设$p(Z|X_k)$，而不是假设$p(Z)$ 因为VAE是一个学习输入的数据，并且生成一个分布，最终从这个分布中采样输出的模型，所以如果直接假设学习到的$p(Z)$，我们并不知道$p(Z)$是从哪里学习来的，无法使用重建误差来进行约束。但是假设$p(Z|X_k)$，那么这一个分布就是从$X_k$学习来的，在后面生成了$\hat{x}$之后就可以使用重建误差在$\hat{x}$和$X_k$来进行约束。
+现在有了学习的数据$X_k$，然后从被学习的数据$X_k$都有了一个专属的正态分布$p(Z|X_k)$，这样就可以根据$X_k$在分布$p(Z|X_k)$采样出一个$Z$，紧接着训练一个生成器$\hat{x}=G(Z)$，通过Z来生成数据。这就是一个完整的VAE流程。
+其中还有一个问题，就是如何通过被学习的数据来生成一个专属的正态分布。对于一个正态分布而言，只需要确定他的均值$\mu$和方差$\sigma^2$，就确定了这个正态分布，但是如何进行每一个数据对应的正态分布的均值和方差呢？用神经网络拟合明显是非常好的一个方案，难计算的用一个神经网络来进行拟合是一个常见的思路。
+VAE的重参数化</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-03-24 16:03:54 +0800 CST'>March 24, 2026</span>&nbsp;·&nbsp;<span>fcsw</span></footer>
+  <a class="entry-link" aria-label="post link to VAE" href="http://localhost:1313/posts/vae/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">CS336 Assignment 1
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> [!info] 题述 一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。
+![[IMG-20260226180216477.png]]
+Tokenizer 大语言模型无法直接理解人类的语言，利用tokenizer将语句token化，变成了一个序列的token，有了token，就相当于把人类的语言和token一一对应，给大语言模型输入token，大语言模型输出token，都可以进行对应。
+BPE tokenizer有几个算法：
+把每一个word进行token 缺点：dict太大了 把每一个字母进行token 缺点：token序列长度太长了 BPE算法是现如今一个比较通用的算法，他首先将word进行unicode化，把每一个word转换成utf-8编码，就可以用256个数字来表示所有的word，但是现在还是有一个缺点就是，token序列长度还是太长了，改进的方法就是多轮遍历，每轮遍历中，出现次数最多token对进行合并，合并成一个新的token，添加进入dict。多轮遍历之后就可以得到一个token表。
+Token Embedding 尽管有了token，大模型已经可以理解这些东西了，但是token这个东西，信息密度太低了，或者说token之间的信息联系太低了，无法让大模型充分的理解token（字词）之间的联系，无法理解上下文。
+所以将token进行向量化，让token之间可以进行联系会让大模型充分的学习。
+Normalization 在深度学习领域，由于数据在层与层之间进行传播，会有梯度爆炸或梯度消失等一系列剧烈变动的问题，所以利用归一化来将数据定在一个范围之内，可以让训练更加稳定，可以使用更懂的学习率（梯度稳定就可以让步子迈大一点），加速训练的收敛。
+Batch Norm Batch Norm是指对于输入的每一个batch，计算均值和方差，然后做归一化。
+Layer Norm Layer Norm 先减去均值，然后除以标准差。 $$ y = \frac{x - \mu}{\sigma} \cdot \lambda &#43; \beta $$ Layer Norm是对每一个feature内部计算均值和方差，然后做归一化
+RMSNorm 是Layer Norm的简化版，去除了减去均值的这一步，制作了scale down（缩放）
+$$ y = \frac{x}{RMS(x)} \cdot \lambda $$ $$ RMS(x) = \sqrt{\frac{1}{n}\sum^{n}_{i=1}x^2_i &#43; \epsilon} $$
+Position Encoding 将token输入进transformer结构，transformer结构会并行处理这些token，由于并行处理，transformer不知道哪一个token在前，哪一个token在后，这些token之间的顺序关系就会被transformer忽略，需要一个位置编码结构来保证transformer结构明白token之间的位置关系。
+Absolute Position Encoding 绝对编码，使用余弦和正弦两个函数来进行位置编码
+Rotary Position Encoding 旋转编码，让每一个token对应一个角度，角度差代表两个token之间相差了多远。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-02-20 22:19:42 +0800 CST'>February 20, 2026</span>&nbsp;·&nbsp;<span>fcsw</span></footer>
+  <a class="entry-link" aria-label="post link to CS336 Assignment 1" href="http://localhost:1313/posts/assignment1/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">CS224N Lecture3
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>神经网络的基础 由于大多数的数据都是非线性的，所有分类问题有非线性的需求。利用神经网络来生成一个非线性的分类器可以比较好的实现分类功能。那么如何训练一个神经网络呢？神经网络的原理是什么？
+神经元 一个神经元就是一个单独的计算单元，将n个输出经过计算处理之后生成一个单独的输出。通过不同的参数来区分是哪一个神经元的输出，这个参数也叫做这个神经元的权重。
+对于一个神经元来说，一个经常选择的函数就是sigmoid函数。这个神经元将一个 $n$维的输入向量转换成为一个标量。公式如下：
+$$ a=\frac{1}{1&#43;exp(-(w^Tx&#43;b))} $$
+在上述公式中， $x$为输入的 $n$维向量， $b$为偏置值， $w^T$为权重（也是这个神经元的参数）
+![[IMG-20260116173227690.png]]
+单层神经元 发散思维到利用多个神经元来解决问题，也就是将输入向量喂给多个神经元，如下图所示。
+![[IMG-20260116173227703.png]]
+所以不同神经元的参数为 ${w^{(1)}, w^{(2)}, …, w^{(m)}}$，偏置为${b_{1}, b_{2}, …, b_{m}}$，对应的输出为 ${a_1, a_2, …, a_m}$
+$$ a_i=\frac{1}{1&#43;exp(-(w^{(i)T}x&#43;b_i))} $$
+前传播网络的计算 ![[IMG-20260116173227716.png]]
+$$ s=U^Ta=U^Tf(Wx&#43;b) $$
+反向传播 反向传播充分利用了函数微分学里面的链式法则，由于每一个参与影响函数变化的参数都可以通过链式法则来求出这个参数的梯度，那么就可以利用链式法则来简化每一个参数梯度的计算。
+如何理解反向传播可以简化参数梯度的计算呢？
+以一个简单的例子来说明：
+有一个简单的函数：
+$$ f(x,y,z)=(x&#43;y)z $$
+不妨设 $q=(x&#43;y)$
+![[IMG-20260116173227731.png]]
+对于这个函数来说，假设三个参数的初始值为 $x=-2,y=5,z=-4$
+如果不利用反向传播也就是链式法则的原理，三个参数的梯度计算如下：
+$$ \frac{\partial f}{\partial x}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial x}\ \frac{\partial f}{\partial y}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial y}\ \frac{\partial f}{\partial z}=\frac{\partial f}{\partial q} $$
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-12-20 22:19:42 +0800 CST'>December 20, 2025</span>&nbsp;·&nbsp;<span>fcsw</span></footer>
+  <a class="entry-link" aria-label="post link to CS224N Lecture3" href="http://localhost:1313/posts/lecture_3_neuralnetwork/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Hello World
     </h2>
   </header>
   <div class="entry-content">
     <p>欢迎 这是一个测试。
-测试 LaTeX 公式： $$E = mc^2$$
+测试 LaTeX 行间公式： $$E = mc^2$$
+测试 LaTeX 行内公式：$ E = mc^2 $，这是一个公式。
 </p>
   </div>
-  <footer class="entry-footer"><span title='2025-12-20 22:19:42 +0800 CST'>December 20, 2025</span></footer>
+  <footer class="entry-footer"><span title='2024-12-20 22:19:42 +0800 CST'>December 20, 2024</span>&nbsp;·&nbsp;<span>fcsw</span></footer>
   <a class="entry-link" aria-label="post link to Hello World" href="http://localhost:1313/posts/hello-world/"></a>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://localhost:1313/">Blog</a></span> · 
+        <span>&copy; 2026 <a href="http://localhost:1313/">Blog</a></span> · 
 
     <span>
         Powered by
