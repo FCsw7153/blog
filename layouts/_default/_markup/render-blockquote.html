@@ -1,0 +1,43 @@
+{{- $raw := .Text | strings.TrimSpace -}}
+{{- $lines := split $raw "\n" -}}
+{{- $first := "" -}}
+{{- if gt (len $lines) 0 -}}
+  {{- $first = index $lines 0 | strings.TrimSpace -}}
+{{- end -}}
+
+{{- $isCallout := false -}}
+{{- $type := "" -}}
+{{- $title := "" -}}
+
+{{- if hasPrefix $first "[!" -}}
+  {{- $isCallout = true -}}
+  {{- $inside := replaceRE `^\[!([^\]]+)\]\s*(.*)$` "$1|$2" $first -}}
+  {{- $parts := split $inside "|" -}}
+  {{- $type = lower (index $parts 0) -}}
+  {{- if ge (len $parts) 2 -}}
+    {{- $title = index $parts 1 | strings.TrimSpace -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $isCallout -}}
+  {{- $bodyLines := after 1 $lines -}}
+  {{- $body := delimit $bodyLines "\n" -}}
+  <div class="callout callout-{{ $type }}">
+    <div class="callout-header">
+      <span class="callout-title">
+        {{- if $title -}}
+          {{ $title }}
+        {{- else -}}
+          {{ humanize $type }}
+        {{- end -}}
+      </span>
+    </div>
+    <div class="callout-body">
+      {{ $body | .Page.RenderString }}
+    </div>
+  </div>
+{{- else -}}
+  <blockquote>
+    {{ .Text }}
+  </blockquote>
+{{- end -}}

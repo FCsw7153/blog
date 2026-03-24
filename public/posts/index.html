@@ -10,7 +10,7 @@
 <meta name="description" content="Posts - Blog">
 <meta name="author" content="fcsw">
 <link rel="canonical" href="http://localhost:1313/posts/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css" integrity="sha256-NDzEgLn/yPBMy&#43;XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.2c98804a5130e139eaa2a019bb7482222bb7c732ff2b6dd805d58a25c04a831d.css" integrity="sha256-LJiASlEw4TnqoqAZu3SCIiu3xzL/K23YBdWKJcBKgx0=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -139,12 +139,6 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">VAE
-      <span class="entry-hint" title="Draft">
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
-          <path
-            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-        </svg>
-      </span>
     </h2>
   </header>
   <div class="entry-content">
@@ -152,7 +146,7 @@
 如果可以得到所学习数据的分布，那么将可以很好的进行生成，有了分布就可以进行采样，那么生成模型将可以生成这个分布里面所有的数据。但是得到所学习数据的分布是十分困难的，所以如何更好的去拟合这个分布成为了生成模型的重点。
 什么是VAE 假设输入的学习的数据是$x$，所输出的生成的数据是$\hat{x}$。所学习到的分布是$z$。那么$\hat{x}$就是从分布$z$中采样得到的数据。
 我们假设$p(Z|X_k)$是一个专属于$X_k$的分布，并且进一步假设这个分布是正态分布。
-[!info] 为什么需要假设$p(Z|X_k)$，而不是假设$p(Z)$ 因为VAE是一个学习输入的数据，并且生成一个分布，最终从这个分布中采样输出的模型，所以如果直接假设学习到的$p(Z)$，我们并不知道$p(Z)$是从哪里学习来的，无法使用重建误差来进行约束。但是假设$p(Z|X_k)$，那么这一个分布就是从$X_k$学习来的，在后面生成了$\hat{x}$之后就可以使用重建误差在$\hat{x}$和$X_k$来进行约束。
+因为VAE是一个学习输入的数据，并且生成一个分布，最终从这个分布中采样输出的模型，所以如果直接假设学习到的$p(Z)$，我们并不知道$p(Z)$是从哪里学习来的，无法使用重建误差来进行约束。但是假设$p(Z|X_k)$，那么这一个分布就是从$X_k$学习来的，在后面生成了$\hat{x}$之后就可以使用重建误差在$\hat{x}$和$X_k$来进行约束。
 现在有了学习的数据$X_k$，然后从被学习的数据$X_k$都有了一个专属的正态分布$p(Z|X_k)$，这样就可以根据$X_k$在分布$p(Z|X_k)$采样出一个$Z$，紧接着训练一个生成器$\hat{x}=G(Z)$，通过Z来生成数据。这就是一个完整的VAE流程。
 其中还有一个问题，就是如何通过被学习的数据来生成一个专属的正态分布。对于一个正态分布而言，只需要确定他的均值$\mu$和方差$\sigma^2$，就确定了这个正态分布，但是如何进行每一个数据对应的正态分布的均值和方差呢？用神经网络拟合明显是非常好的一个方案，难计算的用一个神经网络来进行拟合是一个常见的思路。
 VAE的重参数化</p>
@@ -167,7 +161,7 @@ VAE的重参数化</p>
     </h2>
   </header>
   <div class="entry-content">
-    <p> [!info] 题述 一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。
+    <p> 一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。
 ![[IMG-20260226180216477.png]]
 Tokenizer 大语言模型无法直接理解人类的语言，利用tokenizer将语句token化，变成了一个序列的token，有了token，就相当于把人类的语言和token一一对应，给大语言模型输入token，大语言模型输出token，都可以进行对应。
 BPE tokenizer有几个算法：
@@ -182,6 +176,7 @@ $$ y = \frac{x}{RMS(x)} \cdot \lambda $$ $$ RMS(x) = \sqrt{\frac{1}{n}\sum^{n}_{
 Position Encoding 将token输入进transformer结构，transformer结构会并行处理这些token，由于并行处理，transformer不知道哪一个token在前，哪一个token在后，这些token之间的顺序关系就会被transformer忽略，需要一个位置编码结构来保证transformer结构明白token之间的位置关系。
 Absolute Position Encoding 绝对编码，使用余弦和正弦两个函数来进行位置编码
 Rotary Position Encoding 旋转编码，让每一个token对应一个角度，角度差代表两个token之间相差了多远。
+可以这样想象，把每个词放在一个二维平面上面，第一个词就是旋转了0度的单位向量$(1, 0)$，第二个词就是旋转了$\theta$度的单位向量$(\cos\theta, \sin\theta)$，第n个词就是旋转了$n\times\theta$的单位向量$(\cos(n\times\theta), \sin(n\times\theta))$。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2026-02-20 22:19:42 +0800 CST'>February 20, 2026</span>&nbsp;·&nbsp;<span>fcsw</span></footer>
