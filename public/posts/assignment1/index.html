@@ -8,8 +8,8 @@
 <title>CS336 Assignment 1 | Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="
-    一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。
-  ![[IMG-20260226180216477.png]]
+  一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。
+![[IMG-20260226180216477.png]]
 Tokenizer
 大语言模型无法直接理解人类的语言，利用tokenizer将语句token化，变成了一个序列的token，有了token，就相当于把人类的语言和token一一对应，给大语言模型输入token，大语言模型输出token，都可以进行对应。
 BPE
@@ -45,7 +45,7 @@ Rotary Position Encoding
 可以这样想象，把每个词放在一个二维平面上面，第一个词就是旋转了0度的单位向量$(1, 0)$，第二个词就是旋转了$\theta$度的单位向量$(\cos\theta, \sin\theta)$，第n个词就是旋转了$n\times\theta$的单位向量$(\cos(n\times\theta), \sin(n\times\theta))$。">
 <meta name="author" content="fcsw">
 <link rel="canonical" href="http://localhost:1313/posts/assignment1/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.2c98804a5130e139eaa2a019bb7482222bb7c732ff2b6dd805d58a25c04a831d.css" integrity="sha256-LJiASlEw4TnqoqAZu3SCIiu3xzL/K23YBdWKJcBKgx0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.664b42a05697bc6868fd316f1f12d06e82fec239139621a5a06b2bffe13fac7f.css" integrity="sha256-ZktCoFaXvGho/TFvHxLQboL&#43;wjkTliGloGsr/&#43;E/rH8=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -175,9 +175,9 @@ Rotary Position Encoding
 
 </div>
   </header> 
-  <div class="post-content"><blockquote>
-    <p>一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。</p>
-  </blockquote><p>![[IMG-20260226180216477.png]]</p>
+  <div class="post-content"><div class="obsidian-callout">
+  <p>一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。</p>
+</div><p>![[IMG-20260226180216477.png]]</p>
 <h1 id="tokenizer">Tokenizer<a hidden class="anchor" aria-hidden="true" href="#tokenizer">#</a></h1>
 <p>大语言模型无法直接理解人类的语言，利用tokenizer将语句token化，变成了一个序列的token，有了token，就相当于把人类的语言和token一一对应，给大语言模型输入token，大语言模型输出token，都可以进行对应。</p>
 <h2 id="bpe">BPE<a hidden class="anchor" aria-hidden="true" href="#bpe">#</a></h2>

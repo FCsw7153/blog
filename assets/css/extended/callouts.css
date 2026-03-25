@@ -1,97 +1,16 @@
-.callout {
-  --callout-color: 59, 130, 246;
-  background: rgba(var(--callout-color), 0.12);
-  border: 1px solid rgba(var(--callout-color), 0.25);
-  border-left: 4px solid rgb(var(--callout-color));
+.obsidian-callout {
+  background: rgba(8, 109, 221, 0.12);
+  border: 1px solid rgba(8, 109, 221, 0.22);
+  border-left: 6px solid rgb(8, 109, 221);
   border-radius: 12px;
-  padding: 1rem 1rem 1rem 1rem;
+  padding: 1rem 1.1rem;
   margin: 1.2rem 0;
 }
 
-.callout-header {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: rgb(var(--callout-color));
-}
-
-.callout-header::before {
-  content: "ⓘ";
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-.callout-title {
-  font-size: 1.05rem;
-}
-
-.callout-body > :first-child {
+.obsidian-callout p:first-child {
   margin-top: 0;
 }
 
-.callout-body > :last-child {
+.obsidian-callout p:last-child {
   margin-bottom: 0;
-}
-
-/* info */
-.callout-info {
-  --callout-color: 8, 109, 221;
-}
-
-/* note */
-.callout-note {
-  --callout-color: 108, 92, 231;
-}
-
-.callout-note .callout-header::before {
-  content: "✎";
-}
-
-/* tip */
-.callout-tip {
-  --callout-color: 0, 191, 118;
-}
-
-.callout-tip .callout-header::before {
-  content: "✓";
-}
-
-/* warning */
-.callout-warning {
-  --callout-color: 236, 117, 0;
-}
-
-.callout-warning .callout-header::before {
-  content: "⚠";
-}
-
-/* danger / error */
-.callout-danger,
-.callout-error {
-  --callout-color: 233, 49, 71;
-}
-
-.callout-danger .callout-header::before,
-.callout-error .callout-header::before {
-  content: "⨯";
-}
-
-/* example */
-.callout-example {
-  --callout-color: 120, 82, 238;
-}
-
-.callout-example .callout-header::before {
-  content: "◈";
-}
-
-/* quote */
-.callout-quote {
-  --callout-color: 158, 158, 158;
-}
-
-.callout-quote .callout-header::before {
-  content: "❝";
 }

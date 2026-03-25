@@ -18,9 +18,9 @@
 &lt;h1 id=&#34;什么是vae&#34;&gt;什么是VAE&lt;/h1&gt;
 &lt;p&gt;假设输入的学习的数据是$x$，所输出的生成的数据是$\hat{x}$。所学习到的分布是$z$。那么$\hat{x}$就是从分布$z$中采样得到的数据。&lt;/p&gt;
 &lt;p&gt;我们假设$p(Z|X_k)$是一个专属于$X_k$的分布，并且进一步假设这个分布是正态分布。&lt;/p&gt;
-&lt;blockquote&gt;
-    &lt;p&gt;因为VAE是一个学习输入的数据，并且生成一个分布，最终从这个分布中采样输出的模型，所以如果直接假设学习到的$p(Z)$，我们并不知道$p(Z)$是从哪里学习来的，无法使用重建误差来进行约束。但是假设$p(Z|X_k)$，那么这一个分布就是从$X_k$学习来的，在后面生成了$\hat{x}$之后就可以使用重建误差在$\hat{x}$和$X_k$来进行约束。&lt;/p&gt;
-  &lt;/blockquote&gt;&lt;p&gt;现在有了学习的数据$X_k$，然后从被学习的数据$X_k$都有了一个&lt;strong&gt;专属&lt;/strong&gt;的正态分布$p(Z|X_k)$，这样就可以根据$X_k$在分布$p(Z|X_k)$采样出一个$Z$，紧接着训练一个生成器$\hat{x}=G(Z)$，通过Z来生成数据。这就是一个完整的VAE流程。&lt;/p&gt;
+&lt;div class=&#34;obsidian-callout&#34;&gt;
+  &lt;p&gt;因为VAE是一个学习输入的数据，并且生成一个分布，最终从这个分布中采样输出的模型，所以如果直接假设学习到的$p(Z)$，我们并不知道$p(Z)$是从哪里学习来的，无法使用重建误差来进行约束。但是假设$p(Z|X_k)$，那么这一个分布就是从$X_k$学习来的，在后面生成了$\hat{x}$之后就可以使用重建误差在$\hat{x}$和$X_k$来进行约束。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;现在有了学习的数据$X_k$，然后从被学习的数据$X_k$都有了一个&lt;strong&gt;专属&lt;/strong&gt;的正态分布$p(Z|X_k)$，这样就可以根据$X_k$在分布$p(Z|X_k)$采样出一个$Z$，紧接着训练一个生成器$\hat{x}=G(Z)$，通过Z来生成数据。这就是一个完整的VAE流程。&lt;/p&gt;
 &lt;p&gt;其中还有一个问题，就是如何通过被学习的数据来生成一个专属的正态分布。对于一个正态分布而言，只需要确定他的均值$\mu$和方差$\sigma^2$，就确定了这个正态分布，但是如何进行每一个数据对应的正态分布的均值和方差呢？用神经网络拟合明显是非常好的一个方案，难计算的用一个神经网络来进行拟合是一个常见的思路。&lt;/p&gt;
 &lt;h1 id=&#34;vae的重参数化&#34;&gt;VAE的重参数化&lt;/h1&gt;</description>
     </item>
@@ -29,9 +29,9 @@
       <link>http://localhost:1313/posts/assignment1/</link>
       <pubDate>Fri, 20 Feb 2026 22:19:42 +0800</pubDate>
       <guid>http://localhost:1313/posts/assignment1/</guid>
-      <description>&lt;blockquote&gt;
-    &lt;p&gt;一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。&lt;/p&gt;
-  &lt;/blockquote&gt;&lt;p&gt;![[IMG-20260226180216477.png]]&lt;/p&gt;
+      <description>&lt;div class=&#34;obsidian-callout&#34;&gt;
+  &lt;p&gt;一个现代化的大语言模型的架构如下图所示，对于人类的语言输入，首先进行tokenize以及embedding，将人类语言转换成大模型可以看懂的向量，继而经过多轮transformer层，让大语言模型多轮理解输入的语言，最后就可以进行回答。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;![[IMG-20260226180216477.png]]&lt;/p&gt;
 &lt;h1 id=&#34;tokenizer&#34;&gt;Tokenizer&lt;/h1&gt;
 &lt;p&gt;大语言模型无法直接理解人类的语言，利用tokenizer将语句token化，变成了一个序列的token，有了token，就相当于把人类的语言和token一一对应，给大语言模型输入token，大语言模型输出token，都可以进行对应。&lt;/p&gt;
 &lt;h2 id=&#34;bpe&#34;&gt;BPE&lt;/h2&gt;
