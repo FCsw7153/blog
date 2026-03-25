@@ -1,15 +1,30 @@
 .callout {
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--primary);
+  --callout-color: 59, 130, 246;
+  background: rgba(var(--callout-color), 0.12);
+  border: 1px solid rgba(var(--callout-color), 0.25);
+  border-left: 4px solid rgb(var(--callout-color));
   border-radius: 12px;
-  padding: 0.9rem 1rem;
-  margin: 1rem 0;
-  background: var(--entry);
+  padding: 1rem 1rem 1rem 1rem;
+  margin: 1.2rem 0;
 }
 
 .callout-header {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: rgb(var(--callout-color));
+}
+
+.callout-header::before {
+  content: "ⓘ";
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.callout-title {
+  font-size: 1.05rem;
 }
 
 .callout-body > :first-child {
@@ -20,23 +35,63 @@
   margin-bottom: 0;
 }
 
+/* info */
 .callout-info {
-  border-left-color: #3b82f6;
+  --callout-color: 8, 109, 221;
 }
 
+/* note */
 .callout-note {
-  border-left-color: #6366f1;
+  --callout-color: 108, 92, 231;
 }
 
+.callout-note .callout-header::before {
+  content: "✎";
+}
+
+/* tip */
 .callout-tip {
-  border-left-color: #10b981;
+  --callout-color: 0, 191, 118;
 }
 
+.callout-tip .callout-header::before {
+  content: "✓";
+}
+
+/* warning */
 .callout-warning {
-  border-left-color: #f59e0b;
+  --callout-color: 236, 117, 0;
 }
 
+.callout-warning .callout-header::before {
+  content: "⚠";
+}
+
+/* danger / error */
 .callout-danger,
 .callout-error {
-  border-left-color: #ef4444;
+  --callout-color: 233, 49, 71;
+}
+
+.callout-danger .callout-header::before,
+.callout-error .callout-header::before {
+  content: "⨯";
+}
+
+/* example */
+.callout-example {
+  --callout-color: 120, 82, 238;
+}
+
+.callout-example .callout-header::before {
+  content: "◈";
+}
+
+/* quote */
+.callout-quote {
+  --callout-color: 158, 158, 158;
+}
+
+.callout-quote .callout-header::before {
+  content: "❝";
 }
